@@ -40,7 +40,7 @@ We can see that the time it takes to run constantTime() does not vary.  No matte
 
 ```js
 function linearTime(arr) {
-     for (elem of arr) {
+     for (let elem of arr) {
         console.log(elem)
 	}
 }
@@ -74,8 +74,8 @@ In this example, increasing the size of our array does increase how long it take
 ```js
 //Print out who selected which character.  Two players can select the same character.
 function quadraticTime(arr) {
-  for (elemOne of arr) {
-    for (elemTwo of arr) {
+  for (let elemOne of arr) {
+    for (let elemTwo of arr) {
 	    console.log("Player One: " + elemOne + ", Player Two: " + elemTwo)
     }
   }
@@ -252,14 +252,14 @@ function exampleTwo(arr) {
 
 <details>
 	<summary>Explanation: </summary>
-	No matter how big our array is, this will always print "Many printings" 1,000,000 times.  While this	would take a really long time, it is always the ***same*** amount of time.  It will take a constant  time to run this function and it is entirely independant of the length of arr.
+	No matter how big our array is, this will always print "Many printings" 1,000,000 times.  While this	would take a really long time, it is always the ***same*** amount of time.  It will take a constant  time to run this function and it is entirely independent of the length of arr.
 </details>
 
 
 ```js
 function exampleThree(arr) {
    let count = 0
-   for (elem of arr) {
+   for (let elem of arr) {
      if (contains(arr, elem + 1)) {
        count += 1
      }
@@ -268,7 +268,7 @@ function exampleThree(arr) {
 }
 
 function contains(arr, targetElem) {
-  for (elem of arr) {
+  for (let elem of arr) {
     if (elem === targetElem) {
       return true
     }
@@ -303,14 +303,14 @@ function bestAverageAndWorstFunc(arr) {
         return
     }
     if (arr[0] + arr[1] == 24601) {
-        for (elem of arr) {
-            for (elem of arr) {
+        for (let elem of arr) {
+            for (let elem of arr) {
                 console.log("Gotcha!")
             }
         }
         return
     }
-    for (elem of arr) {
+    for (let elem of arr) {
         console.log(elem)
     }
 }```
@@ -392,7 +392,7 @@ function exampleTwo(arr) {
 ```js
 function exampleThree(arr) {
    let count = 0
-   for (elem of arr) {
+   for (let elem of arr) {
      if (contains(arr, elem + 1)) {
        count += 1
      }
@@ -401,7 +401,7 @@ function exampleThree(arr) {
 }
 
 function contains(arr, targetElem) {
-  for (elem of arr) {
+  for (let elem of arr) {
     if (elem === targetElem) {
       return true
     }
@@ -436,7 +436,7 @@ function compoundRuntimes(arr) {
   for (let i = 0; i < 1000; i++) {
     console.log("Hi")
   }
-	for (num of arr) {
+	for (let num of arr) {
 	  console.log(num)
 	}
   for (let i = 0; i < arr.length; i++) {
@@ -474,9 +474,9 @@ For the examples below, give the average case runtime
 ### Example One:
 ```js
 function doStuff(arr) {
-  for (num of arr) {
-    for (num of arr) {
-	    for (num of arr) {
+  for (let num of arr) {
+    for (let num of arr) {
+	    for (let num of arr) {
 		    console.log(num)
       }
 		}
@@ -491,16 +491,16 @@ O(n<sup>3</sup>)
 ### Example Two:
 ```js
 function doOtherStuff(arr) {
-  for (num of arr) {
+  for (let num of arr) {
     console.log(num)
   }
-  for (num of arr) {
-    for (num of arr) {
+  for (let num of arr) {
+    for (let num of arr) {
 	    console.log(num)
     }
   }
   console.log(num)
-  for (num of arr) {
+  for (let num of arr) {
       print(num)
   }
 }
@@ -513,7 +513,7 @@ O(n<sup>2</sup>)
 ### Example Three:
 ```js
 function foo(arr) {
-  for (num of arr) {
+  for (let num of arr) {
     console.log(num)
   }
 }
