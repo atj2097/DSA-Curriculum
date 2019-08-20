@@ -1,262 +1,163 @@
-# Recursion
 
-## Objectives
+# Recursion Exercises
 
-1. Write recursive functions to solve problems
-2. Use dynamic programming to improve runtime efficiency
+- ### Sum of all from 1 to n
 
-## Resources
+Write a function that takes in a number as input and recursively finds the sum of all numbers up to and including that number.
 
+```js
+input: 6
+output: 21
 
-# What is Recursion?
-In computer science, recursion basically means a function that calls itself. Recursion can be a little mind bending at first but is actually relatively simple: it's basically just another way to create loops.
-
-In fact, anything that can be done iteratively with a `for` loop or `while` loop can also be solved with recursion, and vice versa. There are some languages (like [Haskell](https://www.haskell.org/)) that do not even have iterative `for`loops or `while` loops at all, and use recursion for all looping instead!
-
-# How to Use Recursion
-
-A recursive function consists of two things:
-
-1. A recursive call
-2. A base case
-
-## The Recursive Call
-A recursive function is a function that calls iteself.
-
-```swift
-func recurse() {
-	print("hi")
-	recurse()
+func addRecur(at start: Int , to goal: Int) {
+if goal < start {
+return
 }
-```
-recurse() is a recursive function.  It will print "hi", then call itself, which will print "hi" and then call itself, which will print "hi" and then call itself, and so on.  
-
-<details>
-<summary>Recursive Patrick</summary>
-
-![recursive patrick](https://media.giphy.com/media/xlTwaFb20TVjW/giphy.gif)
-</details>
-
-<br>
-How can we stop this process and have it do something more useful?
-
-## The Base Case
-The most important part of any recursive function is the 'base case'. The base case is basically a conditional that tells the function to stop calling itself (the base case is usually just a simple `if` statement):
-
-
-The function should NOT call itself within the base case. In other words, the base case `if` statement should do the very last thing the function does before ending.
-
-Here's another example of a recursive function without a base case:
-
-```swift
-func countDownToZero(from num: Int) {
-    print(num)
-    countDown(from: num - 1)
+print(start)
+addRecur(at: start + 1, to: goal )
 }
+addRecur(at: 6, to: 21)
+addRecur(start: 0, goal: 10)
+21 = 6 + 5 + 4 + 3 + 2 + 1
 ```
 
 
+- ### Multiply array
 
-<details>
-<summary> When do we want this function to stop running? </summary>
-        When num is zero
-</details>
+Write a function called `multArr` that takes in an array of numbers as an argument and recursively multiplies together all of the values in the array.
 
-Let's add that base case:
-
-```swift
-func countDownToZero(from currentNum: Int) {
-    if currentNum == 0 {
-        return
-    }
-    print(currentNum)
-    countDownToZero(from: currentNum - 1)
+```js
+func multArr(mult arr: [Int]) -> Int {
+//   var array = arr
+if arr.count == 1 {
+return arr[0]
 }
-```
-Make sure your recursive functions always have a base case!
+var zero = arr[0]
+print(zero)
+var remainingElements = Array(arr[1...])
 
-#### Handling edge cases.
-
-Even though we added a base case to our countDownToZero function above, it still has the possibility to run forever.
-
-<details>
-<summary> For what input to countDownToZero(from:) will run forever?</summary>
-If the input is less than zero.
-</details>
-
-<details>
-<summary>How can we resole this issue</summary>
-
-```swift
-func countDownToZero(from currentNum: Int) {
-    if currentNum <= 0 {
-        return
-    }
-    print(currentNum)
-    countDownToZero(from: currentNum - 1)
+print(remainingElements)
+return zero * multArr(mult: remainingElements)
 }
+//multArr(mult: [5,5,1,2])
+
+multArr([2, 3, 5]); // returns 30
+multArr([5, 5, 1, 2]); //returns 50
 ```
 
-</details>
+- ### Concatenate array
 
-
-## Practice problem 1
-
-Write a function that counts up to a target number.
-
-```swift
-func countUp(to target: Int, startingAt currentNum: Int) {
+Write a function called `concatArr` that takes in an array of strings as an argument and recursively concatenates the strings together into a single string, with spaces between each original string.
+func concatArr(goal sentence: [String]) -> String {
+if sentence.count == 1 {
+return sentence[0]
 }
-```
-
-## Recursive vs Iterative Loops
-We just saw an example of how to write a loop recursively.
-
-We could have done that iteratively pretty easily:
-
-```swift
-func countUp(to target: Int, startingAt currentNun: Int) {
-   for i in currentNum...target {
-      print(i)
-   }
+var zero = sentence[0]
+print(zero)
+var remainingElements = Array(sentence[1...])
+print(remainingElements)
+return zero + concatArr(goal: remainingElements)
 }
-```
-
-Anything that we can solve iteratively, we can solve recurseively and vice versa.
-
-This leads to a natural question.  If recursion looks more confusing, why would we ever want to use it solve problems?
-
-# When to use recursion
-In general, you should only use recursion if it would be significantly simpler than the iterative solution. A good rule of thumb is to use recursion when it helps makes your code more readable. In most cases iterative solutions are preferable over recursive solutions because recursion has some added performance costs, like extra function calls.
-
-
-## Factorial
-
-
-One simple example of how to practically use recursion is with the factorial algorithm.
-
-*Factorial* (symbol: "!") means to multiply a integer by every integer before it.
-
-```
-Example: 5! = 5 * 4 * 3 * 2 * 1 = 120
-```
-
-Let's make an iterative solution first, then let's compare it to a recursive solution:
-
-<details>
-<summary> Iterative factorial </summary>
-	
-```swift
-func factorial(n: Int) -> Int {
-    var product = 1
-    for currentNum in 1...n {
-        product *= currentNum
-    }
-    return product
+concatArr(goal: ["is ", "it ", "tomorrow"])
+//
+```js
+func concatArr(goal sentence: [String]) -> String {
+if sentence.count == 1 {
+return sentence[0]
 }
-```
-</details>
-
-
-<details>
-<summary> Recursive Factorial </summary>
-
-```swift
-func recursiveFactorial(n: Int) -> Int {
-    guard n > 1 else {return 1} //Base Case
-    return n * recursiveFactorial(n: n - 1) //Recursive Call
+var zero = sentence[0]
+print(zero)
+var remainingElements = Array(sentence[1...])
+print(remainingElements)
+return zero + concatArr(goal: remainingElements)
 }
+concatArr(goal: ["is ", "it ", "tomorrow"])
+concatArr(['is', 'it', 'tomorrow']); // returns 'is it tomorrow'
+concatArr(['or', 'just', 'the', 'end', 'of', 'time']); //returns 'or just the end of time'
 ```
+//
+- ### Sum evens
 
-</details>
+Write a function called `sumEvens` that takes in an array of numbers as an argument and recursively sums only the even numbers in the array.
 
+```js
+func sumEvens(sum arr: [Int]) -> Int {
 
-
-
-## Fibonacci
-
-
-A common, real world example of when to use recursion is the Fibonacci sequence. Here is the recursive solution for finding the nth number of a Fibonacci sequence:
-
-The [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_number) is made by adding the two previous numbers together:
-
-1, 1, 2, 3, 5, 8, 13, 21, 34 ...
-
-<details>
-<summary> Recursive Fibonacci </summary>
-
-```swift
-func recursiveFib(n: Int) -> Int {
-    guard n > 2 else { return 1 }
-    return recursiveFib(n: n - 1) + recursiveFib(n: n - 2)
+if arr.count <= 0 {
+return 0
 }
-```
-
-</details>
-
-The advantage of recursive solutions is that they can be much easier to understand.  This code is very dense, so we should take a look at what it's doing.
-
-<details>
-<summary> Visual Representation </summary>
-
-![Fib](http://www.introprogramming.info/wp-content/uploads/2013/07/clip_image00525.png)
-
-</details>
-
-
-<details>
-<summary> With stick figures </summary>
-
-![Fib](https://i.stack.imgur.com/6hD41.png)
-
-</details>
-
-
-<details>
-
-<summary> What might be a downside of using this method? </summary>
-
-It's very slow!  We have to do a lot of the same work over again.
-
-</details>
-
-
-
-## Dynamic Programming and Memoization
-
-**Memoization**    
-In computing, memoization is an optimization technique used primarily to speed up computer programs by _storing the results of expensive function calls and returning the cached result_ when the same inputs occur again.
-
-**Dynamic Programming** is the combination of **Memoization** and **recursion**.  We can work memoization into our recursive Fibonacci to improve the runtime.
-
-```swift
-var fibValues = [Int: Int]()
-func recursiveFibDynamicProgramming(num: Int) -> Int {
-  if let fibonacci = fibValues[num] {
-    return fibonacci
-  }
-
-  guard num > 1 else {
-    fibValues[num] = num
-    return 1
-  }
-
-  let fibonacci = recursiveFibDynamicProgramming(num: num - 1) + recursiveFibDynamicProgramming(num: num - 2)
-  fibValues[num] = fibonacci
-  return fibonacci // 19 times
+var zero = arr[0]
+if arr[0] % 2 == 0 {
+return arr[0] + sumEvens(sum: Array(arr.dropFirst()))
 }
+else {
+return sumEvens(sum: Array(arr.dropFirst()))
+}
+}
+
+sumEvens(sum: [2, 3, 5, 6])
+sumEvens([2, 3, 5, 6]); // returns 8
+sumEvens([10, 5, 1, 2, 12]); //returns 24
 ```
 
+- ### Recursive range
 
+Write a function called `range` which takes in two numbers (num1, num2) as arguments. The function should return an array of numbers between num1 and num2.
 
-# Other tips
+```js
+//range(2,10); // returns [2, 3, 4, 5, 6,7, 8, 9, 10]
+//range(17,20); // returns [17, 18, 19, 20]
 
-## Calculating Big O of Recursive Functions
-In iterative loops, we count the number of loops in order to figure out the Big O complexity. Similarly, with recursion, we count the number of times the function is being called.
+func rang(num1 numberOne: Int , num2 numberTwo: Int) -> [Int] {
+var array = [Int]()
+if numberOne > numberTwo { return array }
+array.append(numberOne)
+return array + rang(num1: numberOne + 1, num2: numberTwo)
+}
+print(rang(num1: 2, num2: 10))
+//```)
+//
+//
+- ### Triple Step
 
+A child is running up a staircase with n steps and can hop either 1 step 2 steps or 3 steps at a time. Write a function called 'tripleStep', that takes in an argument `n` that represents the number of steps in the staircase, and returns a count of how many possible ways the child can run up the stairs.
 
-## Recursive State
-In recursive functions, state is passed down through arguments. In other words, you should generally not save variables within your recursive functions. Instead, if you want to keep track of any data, you should pass them down through arguments. In this way the function's arguments basically keep a history of the state of the function. This makes recursive functions immutable, which is one of their advantages.
+```js
+func tripleStep( n: Int) -> Int {
+if n == 0 {
+return 1
+}
+if n < 0 {
+return 0
+}
+return tripleStep(n: n-1) + tripleStep(n: n-2) + tripleStep(n: n-3)
 
-**Pair Programming exercises**   
-[Recursion Exercises](./lab.md)  
+}
+print(tripleStep(n: 10))
+tripleStep(n: 3); //returns 4
+tripleStep(n: 4); //returns 7
+tripleStep(n: 5); //returns 13
+tripleStep(n: 10); //returns 274
+//```
+//
+//Source: Cracking the Coding Interview
+//
+- ### Coin Combos
+
+Given an infinite number of quarters, dimes, nickels, and pennies, write code to calculate the number of possible ways of giving exact change for `n` cents.
+
+In other words, write a function called `coinCombos` that takes in one argument: `n`, which represents the total amount of money (in cents) that you need to make change for. Your function should return the amount of possible combinations you can make to return that exact amount of change.
+
+//For example:
+//```js
+//coinCombos(5); //returns 2
+//coinCombos(10); //returns 4
+//coinCombos(25); //returns 13
+//coinCombos(60); //returns 73
+//```
+//
+//Source: CTCI
+//
+//# Resources
+//- [JavaScript Recursion Exercises](http://www.w3resource.com/javascript-exercises/javascript-recursion-functions-exercises.php)
+//- [Swift Recursion Exercises](https://www.weheartswift.com/recursion/)
